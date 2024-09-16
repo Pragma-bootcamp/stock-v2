@@ -41,8 +41,6 @@ class CategoryControllerTest {
     @MockBean
     private ICategoryHandler iCategoryHandler;
     private Category category;
-    private CategoryRequest categoryRequest;
-    private CategoryResponse categoryResponse;
 
     @BeforeEach
     void setUp() {
@@ -51,7 +49,7 @@ class CategoryControllerTest {
 
     @Test
     void createCategory() throws Exception {
-        categoryRequest = new CategoryRequest("Testing category","Testing Description");
+        CategoryRequest categoryRequest = new CategoryRequest(Constant.DEFAULT_NAME, Constant.DEFAULT_DESCRIPTION);
         CategoryResponse category= mock(CategoryResponse.class);
         ApiResponseFormat<CategoryResponse> mockResponse = new ApiResponseFormat<>(category,null);
         given(iCategoryHandler.saveCategory(ArgumentMatchers.any())).willReturn(mockResponse);
