@@ -1,5 +1,7 @@
 package com.pragma.stock.infraestructure.input.advice;
 
+import com.pragma.stock.application.exception.PaginationException;
+import com.pragma.stock.application.utils.UtilConstant;
 import com.pragma.stock.domain.utils.ErrorResponse;
 import com.pragma.stock.domain.exception.CategoryException;
 import org.springframework.http.HttpStatus;
@@ -29,7 +31,7 @@ public class ControllerAdvice {
     }
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ErrorResponse> handleTypeMismatchException(MethodArgumentTypeMismatchException ex) {
-        String errorMessage = String.format("El parámetro '%s' tiene un valor inválido: '%s'", ex.getName(), ex.getMostSpecificCause().getMessage());
+        String errorMessage = String.format(UtilConstant.INVALID_PARAMETER_VALUE, ex.getName(), ex.getMostSpecificCause().getMessage());
         ErrorResponse response = new ErrorResponse(errorMessage,HttpStatus.BAD_REQUEST.value() );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
@@ -37,5 +39,10 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MissingServletRequestParameterException ex) {
         ErrorResponse errResponse = new ErrorResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errResponse);
+    }
+    @ExceptionHandler(PaginationException.class)
+    public ResponseEntity<ErrorResponse> handleArticleException(PaginationException paginationException) {
+        ErrorResponse errorResponse = new ErrorResponse(paginationException.getErrorMessage(), paginationException.getErrorCode());
+        return ResponseEntity.status(paginationException.getErrorCode()).body(errorResponse);
     }
 }

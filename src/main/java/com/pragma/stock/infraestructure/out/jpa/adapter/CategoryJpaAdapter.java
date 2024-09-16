@@ -5,10 +5,16 @@ import com.pragma.stock.domain.exception.CategoryException;
 import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.spi.ICategoryPersistencePort;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
+import com.pragma.stock.domain.utils.MetadataResponse;
 import com.pragma.stock.infraestructure.out.jpa.entity.CategoryEntity;
 import com.pragma.stock.infraestructure.out.jpa.mapper.CategoryDboMapper;
 import com.pragma.stock.infraestructure.out.jpa.repository.CategoryRepository;
+import com.pragma.stock.domain.utils.Element;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
@@ -27,4 +33,17 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
         CategoryEntity created = categoryRepository.save(toCreate);
         return new ApiResponseFormat<>(mapper.toDomain(created),null);
     }
+
+    @Override
+    public ApiResponseFormat<List<Category>> findAllCategories(int page, int size, String sortDir) {
+        Pageable pageable = PageRequest.of(page,
+                size,
+                Sort.by(Sort.Direction.fromString(sortDir), Element.NAME.name().toLowerCase()));
+        Page<CategoryEntity> categoryPage = categoryRepository.findAll(pageable);
+        List<Category> categories = categoryPage.getContent().stream().map(mapper::toDomain).toList();
+        MetadataResponse metadata = new MetadataResponse(page,
+                categoryPage.getTotalElements(),categoryPage.getTotalPages(),size);
+        return new ApiResponseFormat<>(categories,metadata);
+    }
+
 }
