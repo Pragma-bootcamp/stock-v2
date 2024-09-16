@@ -2,6 +2,7 @@ package com.pragma.stock.infraestructure.input.advice;
 
 import com.pragma.stock.application.exception.PaginationException;
 import com.pragma.stock.application.utils.UtilConstant;
+import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.utils.ErrorResponse;
 import com.pragma.stock.domain.exception.CategoryException;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,11 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 public class ControllerAdvice {
     @ExceptionHandler(CategoryException.class)
     public ResponseEntity<ErrorResponse> handleCategoryException(CategoryException categoryException) {
+        ErrorResponse errorResponse = new ErrorResponse(categoryException.getErrorMessage(), categoryException.getErrorCode());
+        return ResponseEntity.status(categoryException.getErrorCode()).body(errorResponse);
+    }
+    @ExceptionHandler(BrandException.class)
+    public ResponseEntity<ErrorResponse> handleBrandException(BrandException categoryException) {
         ErrorResponse errorResponse = new ErrorResponse(categoryException.getErrorMessage(), categoryException.getErrorCode());
         return ResponseEntity.status(categoryException.getErrorCode()).body(errorResponse);
     }

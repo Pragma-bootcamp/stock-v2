@@ -33,24 +33,29 @@ public class CategoryController {
                     content = @Content),
             @ApiResponse(responseCode = "409", description = "The category already exist",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class), examples = @ExampleObject(name = "CategoryException", summary = "Example response when the category already exists",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(name = "CategoryException",
+                                    summary = "Example response when the category already exists",
                             value = "{ \"status\": 409, \"message\": \"The category 'Electronics' already exists.\" }"))}),
             @ApiResponse(responseCode = "400", description = "Bad Request",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class), examples = @ExampleObject(name = "CategoryException", summary = "Example response when the category already exists",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(name = "CategoryException",
+                                    summary = "Example response when some properties are invalid",
                             value = "{ \"status\": 409, \"message\": \"The category 'Electronics' already exists.\" }"))}),
     })
     @PostMapping()
     public ApiResponseFormat<CategoryResponse> createCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
         return categoryHandler.saveCategory(categoryRequest);
     }
-
     @Operation(summary = " List all categories")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "List categories", content = {@Content(mediaType = "application/json",
+            @ApiResponse(responseCode = "200", description = "List categories",
+                    content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CategoryResponseListApiFormat.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid parameters supplied",
-                    content = {@Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))})
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class))})
     })
     @GetMapping()
     public ApiResponseFormat<List<CategoryResponse>> listAllCategories(

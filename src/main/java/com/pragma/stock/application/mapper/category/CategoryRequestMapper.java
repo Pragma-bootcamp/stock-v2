@@ -1,4 +1,4 @@
-package com.pragma.stock.application.mapper;
+package com.pragma.stock.application.mapper.category;
 
 import com.pragma.stock.application.dto.category.CategoryRequest;
 import com.pragma.stock.domain.model.Category;
