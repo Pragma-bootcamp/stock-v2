@@ -1,13 +1,10 @@
 package com.pragma.stock.infraestructure.input.rest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pragma.stock.application.dto.brand.BrandRequest;
 import com.pragma.stock.application.dto.brand.BrandResponse;
-import com.pragma.stock.application.dto.category.CategoryRequest;
-import com.pragma.stock.application.dto.category.CategoryResponse;
 import com.pragma.stock.application.handler.brand.IBrandHandler;
-import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
 import com.pragma.stock.utils.Constant;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,11 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(controllers = BrandController.class)
@@ -37,8 +30,6 @@ class BrandControllerTest {
     @MockBean
     private IBrandHandler iBrandHandler;
     ObjectMapper objectMapper = new ObjectMapper();
-    private Brand brand;
-    private BrandRequest brandRequest;
 
     @BeforeEach
     void setUp() {

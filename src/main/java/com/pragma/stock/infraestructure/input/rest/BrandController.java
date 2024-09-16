@@ -2,12 +2,10 @@ package com.pragma.stock.infraestructure.input.rest;
 
 import com.pragma.stock.application.dto.brand.BrandRequest;
 import com.pragma.stock.application.dto.brand.BrandResponse;
-import com.pragma.stock.application.dto.category.CategoryRequest;
-import com.pragma.stock.application.dto.category.CategoryResponse;
+
 import com.pragma.stock.application.handler.brand.IBrandHandler;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
 import com.pragma.stock.infraestructure.documentation.BrandResponseUniqueApiFormat;
-import com.pragma.stock.infraestructure.documentation.CategoryResponseListApiFormat;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;

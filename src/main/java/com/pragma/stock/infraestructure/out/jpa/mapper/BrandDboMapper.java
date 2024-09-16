@@ -1,9 +1,7 @@
 package com.pragma.stock.infraestructure.out.jpa.mapper;
 
 import com.pragma.stock.domain.model.Brand;
-import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.infraestructure.out.jpa.entity.BrandEntity;
-import com.pragma.stock.infraestructure.out.jpa.entity.CategoryEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

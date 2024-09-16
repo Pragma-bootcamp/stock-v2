@@ -1,12 +1,11 @@
 package com.pragma.stock.infraestructure.out.jpa.adapter;
 
-import com.pragma.stock.application.dto.brand.BrandResponse;
+
 import com.pragma.stock.domain.constant.BrandConstant;
 import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
 import com.pragma.stock.infraestructure.out.jpa.entity.BrandEntity;
-import com.pragma.stock.infraestructure.out.jpa.entity.CategoryEntity;
 import com.pragma.stock.infraestructure.out.jpa.mapper.BrandDboMapper;
 import com.pragma.stock.infraestructure.out.jpa.repository.BrandRepository;
 import com.pragma.stock.utils.Constant;
@@ -16,8 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;

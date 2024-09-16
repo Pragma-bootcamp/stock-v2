@@ -1,6 +1,5 @@
 package com.pragma.stock.infraestructure.out.jpa.adapter;
 
-import com.pragma.stock.application.utils.UtilConstant;
 import com.pragma.stock.domain.constant.CategoryConstant;
 import com.pragma.stock.domain.exception.CategoryException;
 import com.pragma.stock.domain.model.Category;
@@ -18,13 +17,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 

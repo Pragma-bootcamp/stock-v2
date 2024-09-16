@@ -1,6 +1,7 @@
 package com.pragma.stock.domain.constant;
 
 public class BrandConstant {
+    private BrandConstant() {}
     public static final String BRAND_FIELD_NAME_NOT_NULL = "The field 'name' must not be null";
     public static final String BRAND_FIELD_DESCRIPTION_NOT_NULL = "The field 'description' must not be null";
     public static final String BRAND_FIELD_DESCRIPTION_NOT_EMPTY = "The field 'description' must not be empty";

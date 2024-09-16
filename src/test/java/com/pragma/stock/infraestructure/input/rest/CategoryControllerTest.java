@@ -3,14 +3,12 @@ package com.pragma.stock.infraestructure.input.rest;
 import com.pragma.stock.application.dto.category.CategoryRequest;
 import com.pragma.stock.application.dto.category.CategoryResponse;
 import com.pragma.stock.application.handler.category.ICategoryHandler;
-import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
 import com.pragma.stock.domain.utils.MetadataResponse;
 import com.pragma.stock.utils.Constant;
 import com.pragma.stock.utils.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +19,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.util.List;
-
 import static org.mockito.BDDMockito.given;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -40,7 +34,6 @@ class CategoryControllerTest {
     ObjectMapper mapper = new ObjectMapper();
     @MockBean
     private ICategoryHandler iCategoryHandler;
-    private Category category;
 
     @BeforeEach
     void setUp() {
