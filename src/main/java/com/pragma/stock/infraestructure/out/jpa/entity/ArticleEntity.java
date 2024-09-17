@@ -1,5 +1,5 @@
 package com.pragma.stock.infraestructure.out.jpa.entity;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,21 +15,26 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "category")
-public class CategoryEntity {
+@Table(name = "article")
+public class ArticleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String description;
+    private Integer quantity;
+    private Double price;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "brand", nullable = false) // Solo debe haber brand_id aquí
+    private BrandEntity brand;
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
-                    CascadeType.PERSIST,
                     CascadeType.MERGE
-            },
-            mappedBy = "categories")
-    @JsonIgnore
-    private Set<ArticleEntity> articles;
-    private String description;
+            })
+    @JoinTable(name = "article_category",
+            joinColumns =  @JoinColumn(name = "article_id", referencedColumnName = "id") ,
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id") )
+    private Set<CategoryEntity> categories;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

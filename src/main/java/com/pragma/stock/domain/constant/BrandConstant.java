@@ -13,4 +13,5 @@ public class BrandConstant {
     public static final String BRAND_NAME_LENGTH_MESSAGE = "The length of field 'name' must be between 3 and 50";
     public  static final String BRAND_DESCRIPTION_LENGTH_MESSAGE = "The field 'description' must be between 3 and 90";
     public static final String BRAND_ALREADY_EXIST = "The brand '%s' already exist";
+    public static final String BRAND_NOT_FOUND= "The brand with the id '%d' does not exist";
 }

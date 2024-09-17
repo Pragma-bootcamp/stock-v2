@@ -46,4 +46,12 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
         return new ApiResponseFormat<>(categories,metadata);
     }
 
+    @Override
+    public Category findCategoryById(Long id) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id).orElse(null);
+        if(categoryEntity == null) throw  new CategoryException(HttpStatus.NOT_FOUND.value(),
+                String.format(CategoryConstant.CATEGORY_NOT_FOUND,id));
+        return mapper.toDomain(categoryEntity);
+    }
+
 }

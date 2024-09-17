@@ -23,4 +23,9 @@ public class BrandUseCase implements IBrandServicePort {
     public ApiResponseFormat<List<Brand>> getAllBrands(int page, int size, String sortDir) {
         return iBrandPersistencePort.findAllBrands(page, size, sortDir);
     }
+
+    @Override
+    public Brand getBrandById(Long id) {
+        return iBrandPersistencePort.findBrandById(id);
+    }
 }

@@ -2,6 +2,7 @@ package com.pragma.stock.infraestructure.input.advice;
 
 import com.pragma.stock.application.exception.PaginationException;
 import com.pragma.stock.application.utils.UtilConstant;
+import com.pragma.stock.domain.exception.ArticleException;
 import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.utils.ErrorResponse;
 import com.pragma.stock.domain.exception.CategoryException;
@@ -24,6 +25,11 @@ public class ControllerAdvice {
     public ResponseEntity<ErrorResponse> handleBrandException(BrandException categoryException) {
         ErrorResponse errorResponse = new ErrorResponse(categoryException.getErrorMessage(), categoryException.getErrorCode());
         return ResponseEntity.status(categoryException.getErrorCode()).body(errorResponse);
+    }
+    @ExceptionHandler(ArticleException.class)
+    public ResponseEntity<ErrorResponse> handleArticleException(ArticleException articleException) {
+        ErrorResponse errorResponse = new ErrorResponse(articleException.getErrorMessage(), articleException.getErrorCode());
+        return ResponseEntity.status(articleException.getErrorCode()).body(errorResponse);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {

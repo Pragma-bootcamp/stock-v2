@@ -47,4 +47,13 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
         return new ApiResponseFormat<>(brands,metadata);
     }
 
+    @Override
+    public Brand findBrandById(Long id) {
+        BrandEntity brandEntity = brandRepository.findById(id).orElse(null);
+        if (brandEntity == null) throw new BrandException(HttpStatus.NOT_FOUND.value(),
+                String.format(BrandConstant.BRAND_NOT_FOUND,id));
+        return brandDboMapper.toDomain(brandEntity);
+    }
+
+
 }

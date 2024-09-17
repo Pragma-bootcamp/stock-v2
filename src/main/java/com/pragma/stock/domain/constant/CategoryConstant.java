@@ -13,5 +13,5 @@ public class CategoryConstant {
     public static final String CATEGORY_NAME_LENGTH_MESSAGE = "The length of field 'name' must be between 3 and 50";
     public  static final String CATEGORY_DESCRIPTION_LENGTH_MESSAGE = "The field 'description' must be between 3 and 90";
     public static final String CATEGORY_ALREADY_EXIST = "The category '%s' already exist";
-
+    public static final String CATEGORY_NOT_FOUND = "The category with the id '%d' does not exist";
 }
