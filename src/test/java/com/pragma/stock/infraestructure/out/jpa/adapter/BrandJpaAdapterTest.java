@@ -5,6 +5,8 @@ import com.pragma.stock.domain.constant.BrandConstant;
 import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
+import com.pragma.stock.domain.utils.Element;
+import com.pragma.stock.domain.utils.MetadataResponse;
 import com.pragma.stock.infraestructure.out.jpa.entity.BrandEntity;
 import com.pragma.stock.infraestructure.out.jpa.mapper.BrandDboMapper;
 import com.pragma.stock.infraestructure.out.jpa.repository.BrandRepository;
@@ -14,8 +16,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -58,5 +62,41 @@ class BrandJpaAdapterTest {
         assertEquals(HttpStatus.CONFLICT.value(),exception.getErrorCode());
         assertEquals(String.format(BrandConstant.BRAND_ALREADY_EXIST,Constant.DEFAULT_NAME),exception.getErrorMessage());
         verify(brandRepository, never()).save(any(BrandEntity.class));
+    }
+
+    @Test
+    void findAllBrands() {
+        int page = Constant.PAGE_DEFAULT;
+        int pageSize = Constant.PAGE_SIZE;
+        String sortDir = Constant.ORDER_ASC;
+        BrandEntity brandEntity1 = mock(BrandEntity.class);
+        BrandEntity brandEntity2 = mock(BrandEntity.class);
+        List<BrandEntity> brandEntities = List.of(brandEntity1, brandEntity2);
+        Pageable pageable = PageRequest.of(page, pageSize,
+                Sort.by(Sort.Direction.fromString(sortDir), Element.NAME.name().toLowerCase()));
+        Page<BrandEntity> brandEntityPage = new PageImpl<>(brandEntities);
+        Brand brand = mock(Brand.class);
+        BrandEntity brandEntity = mock(BrandEntity.class);
+
+        when(brandRepository.findAll(pageable)).thenReturn(brandEntityPage);
+        when(brandDboMapper.toDbo(brand)).thenReturn(brandEntity);
+
+        ApiResponseFormat<List<Brand>> brands = brandJpaAdapter.findAllBrands(page,pageSize,sortDir);
+        assertNotNull(brands);
+
+        assertEquals(Constant.PAGE_SIZE, brands.getData().size());
+        verify(brandRepository).findAll(argThat((Pageable p) ->
+                p.getPageNumber() == page &&
+                        p.getPageSize() == pageSize &&
+                        Objects.requireNonNull(p.getSort().getOrderFor(Element.NAME.name().toLowerCase())).getDirection()== Sort.Direction.ASC
+        ));
+
+        MetadataResponse metadata = brands.getMetadata();
+        assertNotNull(metadata);
+        assertEquals(page, metadata.getCurrentPage());
+        assertEquals(Constant.TOTAL_ELEMENTS, metadata.getTotalItems());
+        assertEquals(Constant.TOTAL_PAGES_DEFAULT, metadata.getTotalPages());
+        assertEquals(pageSize, metadata.getPageSize());
+
     }
 }

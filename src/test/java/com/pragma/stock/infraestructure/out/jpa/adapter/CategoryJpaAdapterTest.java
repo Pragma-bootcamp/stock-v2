@@ -85,14 +85,14 @@ class CategoryJpaAdapterTest {
         verify(categoryRepository).findAll(argThat((Pageable p) ->
                 p.getPageNumber() == page &&
                         p.getPageSize() == pageSize &&
-                        Objects.requireNonNull(p.getSort().getOrderFor("name")).getDirection()== Sort.Direction.ASC
+                        Objects.requireNonNull(p.getSort().getOrderFor(Element.NAME.name().toLowerCase())).getDirection()== Sort.Direction.ASC
         ));
 
         MetadataResponse metadata = categories.getMetadata();
         assertNotNull(metadata);
         assertEquals(page, metadata.getCurrentPage());
-        assertEquals(2, metadata.getTotalItems());
-        assertEquals(1, metadata.getTotalPages());
+        assertEquals(Constant.TOTAL_ELEMENTS, metadata.getTotalItems());
+        assertEquals(Constant.TOTAL_PAGES_DEFAULT, metadata.getTotalPages());
         assertEquals(pageSize, metadata.getPageSize());
     }
 }
