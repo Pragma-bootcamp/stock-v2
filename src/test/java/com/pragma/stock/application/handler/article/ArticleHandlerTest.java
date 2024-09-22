@@ -6,7 +6,7 @@ import com.pragma.stock.application.dto.brand.BrandSimpleResponse;
 import com.pragma.stock.application.dto.category.CategorySimpleResponse;
 import com.pragma.stock.application.mapper.article.ArticleRequestMapper;
 import com.pragma.stock.application.mapper.article.ArticleResponseMapper;
-import com.pragma.stock.application.utils.UtilConstant;
+import com.pragma.stock.domain.utils.UtilConstant;
 import com.pragma.stock.domain.api.IArticleServicePort;
 import com.pragma.stock.domain.api.IBrandServicePort;
 import com.pragma.stock.domain.api.ICategoryServicePort;
@@ -24,7 +24,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 

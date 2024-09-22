@@ -5,7 +5,7 @@ import com.pragma.stock.application.dto.category.CategoryResponse;
 import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.application.mapper.category.CategoryRequestMapper;
 import com.pragma.stock.application.mapper.category.CategoryResponseMapper;
-import com.pragma.stock.application.utils.UtilConstant;
+import com.pragma.stock.domain.utils.UtilConstant;
 import com.pragma.stock.domain.api.ICategoryServicePort;
 import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.utils.ApiResponseFormat;

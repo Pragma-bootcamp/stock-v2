@@ -1,7 +1,7 @@
 package com.pragma.stock.infraestructure.input.advice;
 
 import com.pragma.stock.domain.exception.PaginationException;
-import com.pragma.stock.application.utils.UtilConstant;
+import com.pragma.stock.domain.utils.UtilConstant;
 import com.pragma.stock.domain.exception.ArticleException;
 import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.utils.ErrorResponse;

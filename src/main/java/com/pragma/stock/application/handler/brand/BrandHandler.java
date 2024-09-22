@@ -5,7 +5,7 @@ import com.pragma.stock.application.dto.brand.BrandResponse;
 import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.application.mapper.brand.BrandRequestMapper;
 import com.pragma.stock.application.mapper.brand.BrandResponseMapper;
-import com.pragma.stock.application.utils.UtilConstant;
+import com.pragma.stock.domain.utils.UtilConstant;
 import com.pragma.stock.domain.api.IBrandServicePort;
 import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.utils.ApiResponseFormat;

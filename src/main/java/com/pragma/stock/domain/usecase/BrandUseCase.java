@@ -1,6 +1,9 @@
 package com.pragma.stock.domain.usecase;
 
 import com.pragma.stock.domain.api.IBrandServicePort;
+import com.pragma.stock.domain.constant.BrandConstant;
+import com.pragma.stock.domain.constant.ErrorCodeConstant;
+import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.spi.IBrandPersistencePort;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
@@ -16,6 +19,21 @@ public class BrandUseCase implements IBrandServicePort {
 
     @Override
     public ApiResponseFormat<Brand> saveBrand(Brand brand) {
+        if(brand.getName()==null || brand.getName().isEmpty()){
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,BrandConstant.BRAND_FIELD_NAME_NOT_NULL);
+        }
+        if(brand.getDescription()==null || brand.getDescription().isEmpty()){
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,BrandConstant.BRAND_FIELD_DESCRIPTION_NOT_NULL);
+        }
+        if(brand.getDescription().length() > BrandConstant.BRAND_DESCRIPTION_MAX_LENGTH ||
+                brand.getDescription().length() < BrandConstant.BRAND_DESCRIPTION_MIN_LENGTH) {
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,BrandConstant.BRAND_DESCRIPTION_LENGTH_MESSAGE);
+        }
+        if(brand.getName().length() > BrandConstant.BRAND_NAME_MAX_LENGTH ||
+                brand.getName().length() < BrandConstant.BRAND_NAME_MIN_LENGTH) {
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,BrandConstant.BRAND_NAME_LENGTH_MESSAGE);
+        }
+        System.out.print(brand.getName());
         return iBrandPersistencePort.saveBrand(brand);
     }
 
@@ -23,7 +41,6 @@ public class BrandUseCase implements IBrandServicePort {
     public ApiResponseFormat<List<Brand>> getAllBrands(int page, int size, String sortDir) {
         return iBrandPersistencePort.findAllBrands(page, size, sortDir);
     }
-
     @Override
     public Brand getBrandById(Long id) {
         return iBrandPersistencePort.findBrandById(id);

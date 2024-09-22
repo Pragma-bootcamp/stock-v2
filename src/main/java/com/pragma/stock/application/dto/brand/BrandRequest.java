@@ -15,13 +15,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BrandRequest {
     @NotNull(message = com.pragma.stock.domain.constant.BrandConstant.BRAND_FIELD_NAME_NOT_NULL)
-    @Size(max = BrandConstant.BRAND_NAME_MAX_LENGTH, min = BrandConstant.BRAND_NAME_MIN_LENGTH,
-            message = BrandConstant.BRAND_NAME_LENGTH_MESSAGE)
     @NotEmpty(message = BrandConstant.BRAND_FIELD_NAME_NOT_EMPTY)
     private String name;
     @NotNull(message = BrandConstant.BRAND_FIELD_DESCRIPTION_NOT_NULL)
-    @Size(max = BrandConstant.BRAND_DESCRIPTION_MAX_LENGTH, min = BrandConstant.BRAND_DESCRIPTION_MIN_LENGTH,
-            message = BrandConstant.BRAND_DESCRIPTION_LENGTH_MESSAGE)
     @NotEmpty(message = BrandConstant.BRAND_FIELD_DESCRIPTION_NOT_EMPTY)
     private String description;
 }

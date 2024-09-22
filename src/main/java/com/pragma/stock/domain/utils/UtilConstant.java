@@ -1,4 +1,4 @@
-package com.pragma.stock.application.utils;
+package com.pragma.stock.domain.utils;
 
 public class UtilConstant {
     private UtilConstant() {
