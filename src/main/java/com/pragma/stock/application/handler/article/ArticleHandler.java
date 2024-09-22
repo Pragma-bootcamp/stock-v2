@@ -4,15 +4,18 @@ import com.pragma.stock.application.dto.article.ArticleRequest;
 import com.pragma.stock.application.dto.article.ArticleResponse;
 import com.pragma.stock.application.mapper.article.ArticleRequestMapper;
 import com.pragma.stock.application.mapper.article.ArticleResponseMapper;
+import com.pragma.stock.application.utils.UtilConstant;
 import com.pragma.stock.domain.api.IArticleServicePort;
 import com.pragma.stock.domain.api.IBrandServicePort;
 import com.pragma.stock.domain.api.ICategoryServicePort;
 import com.pragma.stock.domain.constant.ArticleConstant;
 import com.pragma.stock.domain.exception.ArticleException;
+import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.domain.model.Article;
 import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
+import com.pragma.stock.domain.utils.Element;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -50,7 +53,23 @@ public class ArticleHandler implements IArticleHandler {
         article.setUpdatedAt(LocalDateTime.now());
         ApiResponseFormat<Article> response = iArticleServicePort.saveArticle(article);
         ArticleResponse articleResponse = articleResponseMapper.toDto(response.getData());
-        return new ApiResponseFormat<>(articleResponse,null);
+        return new ApiResponseFormat<>(articleResponse, null);
+    }
+
+    @Override
+    public ApiResponseFormat<List<ArticleResponse>> listArticles(int page, int size, String sortDir, String sortBy,
+                                                                 String filterBy, String filterValue) {
+        validatePagination(page,size);
+        ApiResponseFormat<List<Article>> articles = iArticleServicePort.
+                getArticles(page, size, sortDir, sortBy, filterBy, filterValue);
+        List<ArticleResponse> articleList = articles.getData().stream().map(articleResponseMapper::toDto).toList();
+        return new ApiResponseFormat<>(articleList, articles.getMetadata());
+    }
+    public void validatePagination(int page,int size) {
+        int minValuePagination = UtilConstant.MIN_VALUE_PAGE_SIZE;
+        if (page < minValuePagination || size < minValuePagination) {
+            throw new PaginationException(HttpStatus.BAD_REQUEST.value(), UtilConstant.PAGINATION_NEGATIVE);
+        }
     }
     public void validateRequest(ArticleRequest articleRequest) {
         if (new HashSet<Long>(articleRequest.getCategories()).size() != articleRequest.getCategories().size()) {

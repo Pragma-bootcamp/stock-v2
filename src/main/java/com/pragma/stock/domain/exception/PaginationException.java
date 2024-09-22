@@ -1,4 +1,4 @@
-package com.pragma.stock.application.exception;
+package com.pragma.stock.domain.exception;
 
 import java.io.Serial;
 

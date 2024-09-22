@@ -2,7 +2,7 @@ package com.pragma.stock.application.handler.category;
 
 import com.pragma.stock.application.dto.category.CategoryRequest;
 import com.pragma.stock.application.dto.category.CategoryResponse;
-import com.pragma.stock.application.exception.PaginationException;
+import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.application.mapper.category.CategoryRequestMapper;
 import com.pragma.stock.application.mapper.category.CategoryResponseMapper;
 import com.pragma.stock.application.utils.UtilConstant;

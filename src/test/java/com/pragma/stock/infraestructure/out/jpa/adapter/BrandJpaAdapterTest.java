@@ -63,7 +63,6 @@ class BrandJpaAdapterTest {
         assertEquals(String.format(BrandConstant.BRAND_ALREADY_EXIST,Constant.DEFAULT_NAME),exception.getErrorMessage());
         verify(brandRepository, never()).save(any(BrandEntity.class));
     }
-
     @Test
     void findAllBrands() {
         int page = Constant.PAGE_DEFAULT;

@@ -11,5 +11,9 @@ import java.util.List;
 
 public interface ArticleRepository extends JpaRepository<ArticleEntity,Long> {
     List<ArticleEntity> findByName(String name);
+    @Query("SELECT a FROM ArticleEntity a JOIN a.categories c WHERE c.id = :categoryId")
+    Page<ArticleEntity> findByCategoryId(@Param("categoryId") Long categoryId, Pageable pageable);
+    @Query("SELECT a FROM ArticleEntity a WHERE a.brand.name = :brandName")
+    Page<ArticleEntity> findByBrandName(@Param("brandName") String brandName, Pageable pageable);
 
 }

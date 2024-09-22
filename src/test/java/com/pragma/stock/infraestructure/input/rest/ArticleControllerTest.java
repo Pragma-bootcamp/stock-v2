@@ -12,7 +12,9 @@ import com.pragma.stock.domain.model.Article;
 import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
+import com.pragma.stock.domain.utils.MetadataResponse;
 import com.pragma.stock.utils.Constant;
+import com.pragma.stock.utils.Element;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
@@ -32,6 +34,7 @@ import java.util.List;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @WebMvcTest(controllers = ArticleController.class)
@@ -41,10 +44,11 @@ class ArticleControllerTest {
     private MockMvc mockMvc;
     @MockBean
     private IArticleHandler iArticleHandler;
-    ObjectMapper objectMapper= new ObjectMapper();;
+    ObjectMapper objectMapper = new ObjectMapper();
     private ArticleRequest articleRequest;
     private Article article;
     private ArticleResponse articleResponse;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -52,6 +56,7 @@ class ArticleControllerTest {
         article = new Article();
         articleResponse = new ArticleResponse();
     }
+
     @Test
     void createArticle() throws Exception {
         articleRequest.setName(Constant.DEFAULT_NAME);
@@ -78,7 +83,7 @@ class ArticleControllerTest {
         article.setCategories(new HashSet<>(List.of(mock(Category.class))));
         article.setCreatedAt(LocalDateTime.now());
         article.setUpdatedAt(LocalDateTime.now());
-        ApiResponseFormat<ArticleResponse> response = new ApiResponseFormat<>(articleResponse,null);
+        ApiResponseFormat<ArticleResponse> response = new ApiResponseFormat<>(articleResponse, null);
         given(iArticleHandler.saveArticle(ArgumentMatchers.any())).willReturn(response);
 
         ResultActions resultActions = mockMvc.perform(post("/articles")
@@ -91,4 +96,24 @@ class ArticleControllerTest {
         resultActions.andExpect(MockMvcResultMatchers.jsonPath("$.data.description")
                 .value(Constant.DEFAULT_DESCRIPTION));
     }
+
+    @Test
+    void getArticles() throws Exception {
+        Integer page = Constant.PAGE_DEFAULT;
+        Integer pageSize = Constant.PAGE_SIZE;
+        List<ArticleResponse> articleResponseList = List.of(mock(ArticleResponse.class), mock(ArticleResponse.class));
+        MetadataResponse metadata = new MetadataResponse(Constant.PAGE_DEFAULT,
+                Constant.TOTAL_ELEMENTS, Constant.TOTAL_PAGES_DEFAULT, Constant.PAGE_SIZE);
+        ApiResponseFormat<List<ArticleResponse>> responseList = new ApiResponseFormat<>(articleResponseList, metadata);
+
+        given(iArticleHandler.listArticles(page, pageSize, null, null, null, null))
+                .willReturn(responseList);
+        ResultActions response = mockMvc.perform(get("/articles")
+                .contentType(MediaType.APPLICATION_JSON)
+                .queryParam(Element.SIZE.name().toLowerCase(), pageSize.toString())
+                .queryParam(Element.PAGE.name().toLowerCase(), page.toString())
+        );
+        response.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
 }

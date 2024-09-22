@@ -6,7 +6,7 @@ public class Constant {
     private Constant() {
     }
 
-    public static final int PAGE_DEFAULT = 1;
+    public static final int PAGE_DEFAULT = 0;
     public static final int PAGE_SIZE = 2;
     public static final String ORDER_ASC = "asc";
     public static final String ORDER_DESC = "desc";
@@ -23,4 +23,15 @@ public class Constant {
     public static final List<Long> DEFAULT_LIST_CATEGORIES = List.of(1L, 2L);
     public static final Long DEFAULT_BRAND = 1L;
     public static final Long DEFAULT_ID = 0L;
+    public static final String SORT_BY= "name";
+    public static final String FILTER_BY = "name";
+    public static final String FILTER_VALUE_NUM = "1";
+    public static final String FILTER_VALUE_STR = "default";
+    public static final String WRONG_SORT_BY= "Invalid";
+    public static final String WRONG_FILTER_BY = "Invalid";
+    public static final String WRONG_FILTER_VALUE_NUM = "Invalid";
+    public static final String WRONG_FILTER_VALUE_STR = "Invalid";
+    public static final String WRONG_SORT_DIR = "Invalid";
+    public static final Long DEFAULT_CATEGORY_ID = 1L;
+
 }

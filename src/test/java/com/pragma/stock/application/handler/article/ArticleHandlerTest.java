@@ -6,20 +6,25 @@ import com.pragma.stock.application.dto.brand.BrandSimpleResponse;
 import com.pragma.stock.application.dto.category.CategorySimpleResponse;
 import com.pragma.stock.application.mapper.article.ArticleRequestMapper;
 import com.pragma.stock.application.mapper.article.ArticleResponseMapper;
+import com.pragma.stock.application.utils.UtilConstant;
 import com.pragma.stock.domain.api.IArticleServicePort;
 import com.pragma.stock.domain.api.IBrandServicePort;
 import com.pragma.stock.domain.api.ICategoryServicePort;
+import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.domain.model.Article;
 import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
+import com.pragma.stock.domain.utils.MetadataResponse;
 import com.pragma.stock.utils.Constant;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -53,6 +58,12 @@ class ArticleHandlerTest {
         articleResponse = new ArticleResponse();
         categorySimpleResponse = new CategorySimpleResponse();
         simpleBrandResponse = new BrandSimpleResponse();
+        int page = Constant.PAGE_DEFAULT;
+        int size = Constant.PAGE_SIZE;
+        String sortDir = Constant.ORDER_ASC;
+        String sortBy = Constant.SORT_BY;
+        String filterBy = Constant.FILTER_BY;
+        String filterValue = Constant.FILTER_VALUE_STR;
 
     }
     @Test
@@ -89,5 +100,45 @@ class ArticleHandlerTest {
         assertNotNull(result);
         assertNotNull(result.getData());
         assertNull(result.getMetadata());
+    }
+
+    @Test
+    void listArticles() {
+        int page = Constant.PAGE_DEFAULT;
+        int size = Constant.PAGE_SIZE;
+        String sortDir = Constant.ORDER_ASC;
+        String sortBy = Constant.SORT_BY;
+        String filterBy = Constant.FILTER_BY;
+        String filterValue = Constant.FILTER_VALUE_STR;
+        article = mock(Article.class);
+        articleResponse = mock(ArticleResponse.class);
+        List<Article> listArticles = List.of(mock(Article.class),mock(Article.class));
+        MetadataResponse metadata = new MetadataResponse(Constant.PAGE_DEFAULT,
+                Constant.TOTAL_ELEMENTS,
+                Constant.TOTAL_PAGES_DEFAULT,
+                Constant.PAGE_SIZE);
+        ApiResponseFormat<List<Article>> mockResponse = new ApiResponseFormat<>(listArticles,metadata);
+        when(iArticleServicePort.getArticles(page,size,sortDir,sortBy,filterBy,filterValue)).thenReturn(mockResponse);
+        when(articleResponseMapper.toDto(article)).thenReturn(articleResponse);
+        ApiResponseFormat<List<ArticleResponse>> apiResponse = articleHandler
+                .listArticles(page,size,sortDir,sortBy,filterBy,filterValue);
+        assertNotNull(apiResponse);
+        assertNotNull(apiResponse.getMetadata());
+    }
+
+    @Test
+    void getArticlesPaginationException() {
+        int page = Constant.WRONG_PAGE;
+        int size = Constant.WRONG_PAGE_SIZE;
+        String sortDir = Constant.ORDER_ASC;
+        String sortBy = Constant.SORT_BY;
+        String filterBy = Constant.FILTER_BY;
+        String filterValue = Constant.FILTER_VALUE_STR;
+        PaginationException exception = assertThrows(PaginationException.class,()->{
+            articleHandler.listArticles(page,size,sortDir,sortBy,filterBy,filterValue);
+        });
+        assertEquals(UtilConstant.PAGINATION_NEGATIVE,exception.getErrorMessage());
+        assertEquals(HttpStatus.BAD_REQUEST.value(), exception.getErrorCode());
+
     }
 }

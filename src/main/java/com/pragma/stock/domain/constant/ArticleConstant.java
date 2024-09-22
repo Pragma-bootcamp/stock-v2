@@ -1,7 +1,9 @@
 package com.pragma.stock.domain.constant;
 
 public class ArticleConstant {
-    private ArticleConstant() {}
+    private ArticleConstant() {
+    }
+
     public static final String ARTICLE_FIELD_NAME_NOT_NULL = "The field 'name' must not be null";
     public static final String ARTICLE_FIELD_DESCRIPTION_NOT_NULL = "The field 'description' must not be null";
     public static final String ARTICLE_FIELD_DESCRIPTION_NOT_EMPTY = "The field 'description' must not be empty";
@@ -13,7 +15,7 @@ public class ArticleConstant {
     public static final int ARTICLE_CATEGORIES_MAX_LENGTH = 3;
     public static final int ARTICLE_CATEGORIES_MIN_LENGTH = 1;
     public static final String ARTICLE_NAME_LENGTH_MESSAGE = "The length of field 'name' must be between 3 and 50";
-    public  static final String ARTICLE_DESCRIPTION_LENGTH_MESSAGE = "The field 'description' must be between 3 and 90";
+    public static final String ARTICLE_DESCRIPTION_LENGTH_MESSAGE = "The field 'description' must be between 3 and 90";
     public static final String ARTICLE_ALREADY_EXIST = "The brand '%s' already exist";
     public static final String ARTICLE_PRICE_NOT_NULL = "The field 'price' must not be null";
     public static final String ARTICLE_PRICE_POSITIVE = "The field 'price' must be a positive integer";
@@ -26,5 +28,6 @@ public class ArticleConstant {
     public static final String ARTICLE_BRAND_NOT_NULL = "The field 'brand' must not be null";
     public static final String ARTICLE_BRAND_POSITIVE = "The field 'brand' must have values greater than 0";
     public static final String ARTICLE_CATEGORIES_DUPLICATED = "The categories ids can't be duplicated";
+    public static final String ARTICLE_NOT_FOUND = "The article with the id '%d' not found";
 
 }

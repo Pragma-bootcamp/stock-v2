@@ -7,4 +7,5 @@ public enum Element {
     DESC,
     PAGE,
     SIZE,
+    CATEGORIES
 }

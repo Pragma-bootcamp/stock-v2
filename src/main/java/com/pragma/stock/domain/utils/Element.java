@@ -5,4 +5,8 @@ public enum Element {
     DESCRIPTION,
     ASC,
     DESC,
+    CATEGORIES,
+    BRAND,
+    ID,
+    NONE
 }

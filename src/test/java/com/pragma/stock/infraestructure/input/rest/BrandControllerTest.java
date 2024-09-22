@@ -62,7 +62,7 @@ class BrandControllerTest {
     }
 
     @Test
-    void listCategories() throws Exception {
+    void listBrands() throws Exception {
         Integer page = Constant.PAGE_DEFAULT;
         Integer pageSize = Constant.PAGE_SIZE;
         String sortDir = Constant.ORDER_ASC;

@@ -2,7 +2,7 @@ package com.pragma.stock.application.handler.brand;
 
 import com.pragma.stock.application.dto.brand.BrandRequest;
 import com.pragma.stock.application.dto.brand.BrandResponse;
-import com.pragma.stock.application.exception.PaginationException;
+import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.application.mapper.brand.BrandRequestMapper;
 import com.pragma.stock.application.mapper.brand.BrandResponseMapper;
 import com.pragma.stock.application.utils.UtilConstant;

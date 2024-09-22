@@ -3,7 +3,6 @@ package com.pragma.stock.application.utils;
 public class UtilConstant {
     private UtilConstant() {
     }
-
     public static final String PAGINATION_NEGATIVE = "The param 'page' and 'size' must not be negative";
     public static final String PAGE_NULL = "The param 'page' is mandatory";
     public static final String SIZE_NULL = "The param 'size' is mandatory";
