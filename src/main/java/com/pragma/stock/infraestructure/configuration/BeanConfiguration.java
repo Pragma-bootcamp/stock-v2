@@ -30,7 +30,7 @@ public class BeanConfiguration {
     private final BrandRepository brandRepository;
     private final BrandDboMapper brandDboMapper;
     private final ArticleRepository articleRepository;
-    private final ArticleDboMapper articlerDboMapper;
+    private final ArticleDboMapper articleDboMapper;
 
     @Bean
     public ICategoryPersistencePort categoryPersistencePort() {
@@ -52,11 +52,7 @@ public class BeanConfiguration {
     @Bean
     public IArticlePersistencePort articlePersistencePort() {
         return new ArticleJpaAdapter(articleRepository,
-                articlerDboMapper,
-                categoryRepository,
-                categoryDboMapper,
-                brandRepository,
-                brandDboMapper);
+                articleDboMapper);
     }
     @Bean
     public IArticleServicePort articleServicePort(){

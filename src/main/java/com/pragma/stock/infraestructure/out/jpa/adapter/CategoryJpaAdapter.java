@@ -1,6 +1,7 @@
 package com.pragma.stock.infraestructure.out.jpa.adapter;
 
 import com.pragma.stock.domain.constant.CategoryConstant;
+import com.pragma.stock.domain.constant.ErrorMessages;
 import com.pragma.stock.domain.exception.CategoryException;
 import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.spi.ICategoryPersistencePort;
@@ -28,7 +29,7 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
     public ApiResponseFormat<Category> saveCategory(Category category) {
         List<CategoryEntity> existCategory = categoryRepository.findByName(category.getName());
         if(!existCategory.isEmpty()) throw new CategoryException(HttpStatus.CONFLICT.value(),
-                String.format(CategoryConstant.CATEGORY_ALREADY_EXIST,category.getName()));
+                String.format(ErrorMessages.CATEGORY_ALREADY_EXIST,category.getName()));
         CategoryEntity toCreate = mapper.toDbo(category);
         CategoryEntity created = categoryRepository.save(toCreate);
         return new ApiResponseFormat<>(mapper.toDomain(created),null);
@@ -50,7 +51,7 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
     public Category findCategoryById(Long id) {
         CategoryEntity categoryEntity = categoryRepository.findById(id).orElse(null);
         if(categoryEntity == null) throw  new CategoryException(HttpStatus.NOT_FOUND.value(),
-                String.format(CategoryConstant.CATEGORY_NOT_FOUND,id));
+                String.format(ErrorMessages.CATEGORY_NOT_FOUND,id));
         return mapper.toDomain(categoryEntity);
     }
 

@@ -6,7 +6,6 @@ import com.pragma.stock.application.handler.article.IArticleHandler;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
 import com.pragma.stock.infraestructure.documentation.ArticleResponseListApiFormat;
 import com.pragma.stock.infraestructure.documentation.ArticleResponseUniqueApiFormat;
-import com.pragma.stock.infraestructure.documentation.BrandReponseListApiFormat;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;

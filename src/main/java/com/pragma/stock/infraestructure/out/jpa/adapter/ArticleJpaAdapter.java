@@ -1,16 +1,12 @@
 package com.pragma.stock.infraestructure.out.jpa.adapter;
-
-import com.pragma.stock.domain.constant.ArticleConstant;
+import com.pragma.stock.domain.constant.ErrorMessages;
 import com.pragma.stock.domain.exception.ArticleException;
 import com.pragma.stock.domain.model.Article;
-import com.pragma.stock.domain.model.Brand;
-import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.spi.IArticlePersistencePort;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
 import com.pragma.stock.domain.utils.Element;
 import com.pragma.stock.domain.utils.MetadataResponse;
 import com.pragma.stock.infraestructure.out.jpa.entity.ArticleEntity;
-import com.pragma.stock.infraestructure.out.jpa.entity.CategoryEntity;
 import com.pragma.stock.infraestructure.out.jpa.mapper.ArticleDboMapper;
 import com.pragma.stock.infraestructure.out.jpa.mapper.BrandDboMapper;
 import com.pragma.stock.infraestructure.out.jpa.mapper.CategoryDboMapper;
@@ -31,17 +27,13 @@ import java.util.List;
 public class ArticleJpaAdapter implements IArticlePersistencePort {
     private final ArticleRepository articleRepository;
     private final ArticleDboMapper articleDboMapper;
-    private final CategoryRepository categoryRepository;
-    private final CategoryDboMapper categoryDboMapper;
-    private final BrandRepository brandRepository;
-    private final BrandDboMapper brandDboMapper;
 
     @Override
     public ApiResponseFormat<Article> saveArticle(Article article) {
         List<ArticleEntity> existArticle = articleRepository.findByName(article.getName());
         if (!existArticle.isEmpty()) {
             throw new ArticleException(HttpStatus.CONFLICT.value(),
-                    String.format(ArticleConstant.ARTICLE_ALREADY_EXIST, article.getName()));
+                    String.format(ErrorMessages.ARTICLE_ALREADY_EXIST, article.getName()));
         }
         ArticleEntity toCreate = articleDboMapper.toDbo(article);
         ArticleEntity createdArticle = articleRepository.save(toCreate);
@@ -70,7 +62,7 @@ public class ArticleJpaAdapter implements IArticlePersistencePort {
             ArticleEntity articleEntity = articleRepository
                     .findById(id)
                     .orElseThrow(() ->
-                            new ArticleException(HttpStatus.NOT_FOUND.value(), ArticleConstant.ARTICLE_NOT_FOUND)
+                            new ArticleException(HttpStatus.NOT_FOUND.value(), ErrorMessages.ARTICLE_NOT_FOUND)
                     );
             return articleDboMapper.toDomain(articleEntity);
         }).toList();

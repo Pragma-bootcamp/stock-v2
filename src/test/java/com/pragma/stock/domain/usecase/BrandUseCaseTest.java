@@ -55,7 +55,7 @@ class BrandUseCaseTest {
         BrandException exception = assertThrows(BrandException.class,()->{
             brandUseCase.saveBrand(brand);
         });
-        assertEquals(BrandConstant.BRAND_NAME_LENGTH_MESSAGE, exception.getErrorMessage());
+        assertEquals(ErrorMessages.BRAND_NAME_LENGTH_MESSAGE, exception.getErrorMessage());
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
     }
     @Test
@@ -66,7 +66,7 @@ class BrandUseCaseTest {
         BrandException exception = assertThrows(BrandException.class,()->{
             brandUseCase.saveBrand(brand);
         });
-        assertEquals(BrandConstant.BRAND_FIELD_NAME_NOT_EMPTY, exception.getErrorMessage());
+        assertEquals(ErrorMessages.BRAND_FIELD_NAME_NOT_EMPTY, exception.getErrorMessage());
         assertEquals(HttpStatus.BAD_REQUEST.value(),exception.getErrorCode());
     }
     @Test
@@ -77,7 +77,7 @@ class BrandUseCaseTest {
         BrandException exception = assertThrows(BrandException.class,()->{
             brandUseCase.saveBrand(brand);
         });
-        assertEquals(BrandConstant.BRAND_FIELD_NAME_NOT_NULL, exception.getErrorMessage());
+        assertEquals(ErrorMessages.BRAND_FIELD_NAME_NOT_NULL, exception.getErrorMessage());
         assertEquals(HttpStatus.BAD_REQUEST.value(),exception.getErrorCode());
     }
 
@@ -89,7 +89,7 @@ class BrandUseCaseTest {
         BrandException exception = assertThrows(BrandException.class,()->{
             brandUseCase.saveBrand(brand);
         });
-        assertEquals(BrandConstant.BRAND_DESCRIPTION_LENGTH_MESSAGE, exception.getErrorMessage());
+        assertEquals(ErrorMessages.BRAND_DESCRIPTION_LENGTH_MESSAGE, exception.getErrorMessage());
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
     }
     @Test
@@ -100,7 +100,7 @@ class BrandUseCaseTest {
         BrandException exception = assertThrows(BrandException.class,()->{
             brandUseCase.saveBrand(brand);
         });
-        assertEquals(BrandConstant.BRAND_FIELD_DESCRIPTION_NOT_EMPTY, exception.getErrorMessage());
+        assertEquals(ErrorMessages.BRAND_FIELD_DESCRIPTION_NOT_EMPTY, exception.getErrorMessage());
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
     }
     @Test
@@ -111,7 +111,7 @@ class BrandUseCaseTest {
         BrandException exception = assertThrows(BrandException.class,()->{
             brandUseCase.saveBrand(brand);
         });
-        assertEquals(BrandConstant.BRAND_FIELD_DESCRIPTION_NOT_NULL, exception.getErrorMessage());
+        assertEquals(ErrorMessages.BRAND_FIELD_DESCRIPTION_NOT_NULL, exception.getErrorMessage());
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
     }
 

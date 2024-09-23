@@ -23,10 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
-
-import java.util.HashSet;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -47,17 +44,12 @@ class ArticleHandlerTest {
     private ArticleRequest articleRequest;
     private Article article;
     private ArticleResponse articleResponse;
-    private BrandSimpleResponse simpleBrandResponse;
-    private CategorySimpleResponse categorySimpleResponse;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         articleRequest = new ArticleRequest();
         article= new Article();
         articleResponse = new ArticleResponse();
-        categorySimpleResponse = new CategorySimpleResponse();
-        simpleBrandResponse = new BrandSimpleResponse();
-
     }
     @Test
     void saveArticle() {

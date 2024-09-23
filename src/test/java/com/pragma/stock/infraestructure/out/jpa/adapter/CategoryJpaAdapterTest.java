@@ -1,6 +1,7 @@
 package com.pragma.stock.infraestructure.out.jpa.adapter;
 
 import com.pragma.stock.domain.constant.CategoryConstant;
+import com.pragma.stock.domain.constant.ErrorMessages;
 import com.pragma.stock.domain.exception.CategoryException;
 import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
@@ -57,7 +58,7 @@ class CategoryJpaAdapterTest {
             categoryJpaAdapter.saveCategory(category);
         });
         assertEquals(HttpStatus.CONFLICT.value(), exception.getErrorCode());
-        assertEquals(String.format(CategoryConstant.CATEGORY_ALREADY_EXIST,Constant.DEFAULT_NAME), exception.getMessage());
+        assertEquals(String.format(ErrorMessages.CATEGORY_ALREADY_EXIST,Constant.DEFAULT_NAME), exception.getMessage());
         verify(categoryRepository, never()).save(any(CategoryEntity.class));
     }
 

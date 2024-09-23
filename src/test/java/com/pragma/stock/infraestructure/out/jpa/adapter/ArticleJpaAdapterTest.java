@@ -1,6 +1,7 @@
 package com.pragma.stock.infraestructure.out.jpa.adapter;
 
 import com.pragma.stock.domain.constant.ArticleConstant;
+import com.pragma.stock.domain.constant.ErrorMessages;
 import com.pragma.stock.domain.exception.ArticleException;
 import com.pragma.stock.domain.model.Article;
 import com.pragma.stock.domain.model.Brand;
@@ -72,7 +73,7 @@ class ArticleJpaAdapterTest {
         ArticleException exception = assertThrows(ArticleException.class,()->{
             articleJpaAdapter.saveArticle(article);
         });
-        assertEquals(String.format(ArticleConstant.ARTICLE_ALREADY_EXIST,article.getName()), exception.getErrorMessage());
+        assertEquals(String.format(ErrorMessages.ARTICLE_ALREADY_EXIST,article.getName()), exception.getErrorMessage());
         assertEquals(HttpStatus.CONFLICT.value(),exception.getErrorCode());
     }
     @Test
@@ -177,7 +178,7 @@ class ArticleJpaAdapterTest {
         });
         assertEquals(HttpStatus.NOT_FOUND.value(), exception.getErrorCode());
 
-        assertEquals(ArticleConstant.ARTICLE_NOT_FOUND, exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_NOT_FOUND, exception.getErrorMessage());
 
 
     }

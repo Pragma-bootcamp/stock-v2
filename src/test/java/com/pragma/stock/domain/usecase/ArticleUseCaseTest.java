@@ -1,9 +1,8 @@
 package com.pragma.stock.domain.usecase;
 
 import com.pragma.stock.domain.api.IArticleServicePort;
-import com.pragma.stock.domain.constant.ArticleConstant;
-import com.pragma.stock.domain.constant.ErrorCodeConstant;
 import com.pragma.stock.domain.constant.ErrorMessages;
+import com.pragma.stock.domain.constant.ErrorCodeConstant;
 import com.pragma.stock.domain.exception.ArticleException;
 import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.domain.model.Article;
@@ -97,7 +96,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_BRAND_NOT_NULL,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_BRAND_NOT_NULL,exception.getErrorMessage());
     }
     @Test
     void saveArticleExceptionsCategoriesNull() {
@@ -114,7 +113,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_CATEGORIES_NOT_NULL,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_CATEGORIES_NOT_NULL,exception.getErrorMessage());
     }
     @Test
     void saveArticleExceptionsCategoriesMoreThanThree() {
@@ -136,7 +135,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_CATEGORIES_LENGTH,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_CATEGORIES_LENGTH,exception.getErrorMessage());
     }
     @Test
     void saveArticleExceptionsNameEmpty() {
@@ -158,7 +157,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_FIELD_NAME_NOT_EMPTY,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_FIELD_NAME_NOT_EMPTY,exception.getErrorMessage());
     }
     @Test
     void saveArticleExceptionsNameNull() {
@@ -177,7 +176,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_FIELD_NAME_NOT_NULL,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_FIELD_NAME_NOT_NULL,exception.getErrorMessage());
     }
     @Test
     void saveArticleExceptionsNameVeryShort() {
@@ -196,7 +195,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_NAME_LENGTH_MESSAGE,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_NAME_LENGTH_MESSAGE,exception.getErrorMessage());
     }
 
     @Test
@@ -216,7 +215,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_FIELD_DESCRIPTION_NOT_EMPTY,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_FIELD_DESCRIPTION_NOT_EMPTY,exception.getErrorMessage());
     }
     @Test
     void saveArticleExceptionsDescriptionNull() {
@@ -235,7 +234,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_FIELD_DESCRIPTION_NOT_NULL,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_FIELD_DESCRIPTION_NOT_NULL,exception.getErrorMessage());
     }
 
     @Test
@@ -256,7 +255,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_CATEGORIES_DUPLICATED,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_CATEGORIES_DUPLICATED,exception.getErrorMessage());
     }
     @Test
     void saveArticleExceptionsDescriptionVeryShort() {
@@ -275,7 +274,7 @@ class ArticleUseCaseTest {
             articleUseCase.saveArticle(article);
         });
         assertEquals(ErrorCodeConstant.BAD_REQUEST,exception.getErrorCode());
-        assertEquals(ArticleConstant.ARTICLE_DESCRIPTION_LENGTH_MESSAGE,exception.getErrorMessage());
+        assertEquals(ErrorMessages.ARTICLE_DESCRIPTION_LENGTH_MESSAGE,exception.getErrorMessage());
     }
 
     @Test

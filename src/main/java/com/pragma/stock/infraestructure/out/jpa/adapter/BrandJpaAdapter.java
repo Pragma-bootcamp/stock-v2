@@ -1,6 +1,5 @@
 package com.pragma.stock.infraestructure.out.jpa.adapter;
-
-import com.pragma.stock.domain.constant.BrandConstant;
+import com.pragma.stock.domain.constant.ErrorMessages;
 import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.spi.IBrandPersistencePort;
@@ -28,7 +27,7 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
         List<BrandEntity> brandExist = brandRepository.findByName(brand.getName());
         if (!brandExist.isEmpty()) {
             throw new BrandException(HttpStatus.CONFLICT.value(),
-                    String.format(BrandConstant.BRAND_ALREADY_EXIST,brand.getName()));
+                    String.format(ErrorMessages.BRAND_ALREADY_EXIST,brand.getName()));
         }
         BrandEntity brandToCreate = brandDboMapper.toDbo(brand);
         BrandEntity savedBrand = brandRepository.save(brandToCreate);
@@ -51,7 +50,7 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
     public Brand findBrandById(Long id) {
         BrandEntity brandEntity = brandRepository.findById(id).orElse(null);
         if (brandEntity == null) throw new BrandException(HttpStatus.NOT_FOUND.value(),
-                String.format(BrandConstant.BRAND_NOT_FOUND,id));
+                String.format(ErrorMessages.BRAND_NOT_FOUND,id));
         return brandDboMapper.toDomain(brandEntity);
     }
 

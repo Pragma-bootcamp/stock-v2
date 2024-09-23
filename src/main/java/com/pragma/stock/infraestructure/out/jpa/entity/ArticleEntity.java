@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -34,7 +32,7 @@ public class ArticleEntity {
     @JoinTable(name = "article_category",
             joinColumns =  @JoinColumn(name = "article_id", referencedColumnName = "id") ,
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id") )
-    private Set<CategoryEntity> categories;
+    private List<CategoryEntity> categories;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

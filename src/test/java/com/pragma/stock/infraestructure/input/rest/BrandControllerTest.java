@@ -4,7 +4,6 @@ package com.pragma.stock.infraestructure.input.rest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pragma.stock.application.dto.brand.BrandRequest;
 import com.pragma.stock.application.dto.brand.BrandResponse;
-import com.pragma.stock.application.dto.category.CategoryResponse;
 import com.pragma.stock.application.handler.brand.IBrandHandler;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
 import com.pragma.stock.domain.utils.MetadataResponse;

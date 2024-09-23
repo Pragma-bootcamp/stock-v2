@@ -2,7 +2,6 @@ package com.pragma.stock.domain.usecase;
 
 import com.pragma.stock.domain.constant.*;
 import com.pragma.stock.domain.exception.ArticleException;
-import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.domain.api.IArticleServicePort;
 import com.pragma.stock.domain.model.Article;
@@ -13,10 +12,8 @@ import com.pragma.stock.domain.spi.IBrandPersistencePort;
 import com.pragma.stock.domain.spi.ICategoryPersistencePort;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
 import com.pragma.stock.domain.utils.Element;
-
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+
 
 public class ArticleUseCase implements IArticleServicePort {
     private final IArticlePersistencePort articlePersistencePort;
@@ -34,37 +31,37 @@ public class ArticleUseCase implements IArticleServicePort {
     @Override
     public ApiResponseFormat<Article> saveArticle(Article article) {
         if (article.getBrand() == null) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_BRAND_NOT_NULL);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_BRAND_NOT_NULL);
         }
         if (article.getCategories() == null) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_CATEGORIES_NOT_NULL);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_CATEGORIES_NOT_NULL);
         }
         if (article.getCategories().isEmpty() ||
                 article.getCategories().size() > ArticleConstant.ARTICLE_CATEGORIES_MAX_LENGTH) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_CATEGORIES_LENGTH);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_CATEGORIES_LENGTH);
         }
         if (article.getName() == null) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_FIELD_NAME_NOT_NULL);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_FIELD_NAME_NOT_NULL);
         }
         if (article.getName().isEmpty()) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_FIELD_NAME_NOT_EMPTY);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_FIELD_NAME_NOT_EMPTY);
         }
         if (article.getDescription() == null) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_FIELD_DESCRIPTION_NOT_NULL);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_FIELD_DESCRIPTION_NOT_NULL);
         }
         if (article.getDescription().isEmpty()) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_FIELD_DESCRIPTION_NOT_EMPTY);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_FIELD_DESCRIPTION_NOT_EMPTY);
         }
         if (article.getDescription().length() > ArticleConstant.ARTICLE_DESCRIPTION_MAX_LENGTH ||
                 article.getDescription().length() < ArticleConstant.ARTICLE_DESCRIPTION_MIN_LENGTH) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_DESCRIPTION_LENGTH_MESSAGE);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_DESCRIPTION_LENGTH_MESSAGE);
         }
         if (article.getName().length() > ArticleConstant.ARTICLE_NAME_MAX_LENGTH ||
                 article.getName().length() < ArticleConstant.ARTICLE_NAME_MIN_LENGTH) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_NAME_LENGTH_MESSAGE);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_NAME_LENGTH_MESSAGE);
         }
         if (article.getCategories().size() != article.getCategories().stream().map(Category::getId).distinct().count()) {
-            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_CATEGORIES_DUPLICATED);
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_CATEGORIES_DUPLICATED);
         }
         List<Category> categories = article.getCategories().stream()
                 .map((category -> categoryPersistencePort.findCategoryById(category.getId()))).toList();

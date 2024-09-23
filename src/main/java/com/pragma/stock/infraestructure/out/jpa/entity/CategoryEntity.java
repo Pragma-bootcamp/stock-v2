@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -28,7 +27,7 @@ public class CategoryEntity {
             },
             mappedBy = "categories")
     @JsonIgnore
-    private Set<ArticleEntity> articles;
+    private List<ArticleEntity> articles;
     private String description;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

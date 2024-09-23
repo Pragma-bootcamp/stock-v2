@@ -1,12 +1,10 @@
 package com.pragma.stock.infraestructure.input.rest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pragma.stock.application.dto.article.ArticleRequest;
 import com.pragma.stock.application.dto.article.ArticleResponse;
 import com.pragma.stock.application.dto.brand.BrandSimpleResponse;
 import com.pragma.stock.application.dto.category.CategorySimpleResponse;
-import com.pragma.stock.application.handler.article.ArticleHandler;
 import com.pragma.stock.application.handler.article.IArticleHandler;
 import com.pragma.stock.domain.model.Article;
 import com.pragma.stock.domain.model.Brand;
@@ -29,7 +27,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;

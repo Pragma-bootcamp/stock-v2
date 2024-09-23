@@ -2,6 +2,7 @@ package com.pragma.stock.infraestructure.out.jpa.adapter;
 
 
 import com.pragma.stock.domain.constant.BrandConstant;
+import com.pragma.stock.domain.constant.ErrorMessages;
 import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.model.Brand;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
@@ -60,7 +61,7 @@ class BrandJpaAdapterTest {
             brandJpaAdapter.saveBrand(brand);
         });
         assertEquals(HttpStatus.CONFLICT.value(),exception.getErrorCode());
-        assertEquals(String.format(BrandConstant.BRAND_ALREADY_EXIST,Constant.DEFAULT_NAME),exception.getErrorMessage());
+        assertEquals(String.format(ErrorMessages.BRAND_ALREADY_EXIST,Constant.DEFAULT_NAME),exception.getErrorMessage());
         verify(brandRepository, never()).save(any(BrandEntity.class));
     }
     @Test
