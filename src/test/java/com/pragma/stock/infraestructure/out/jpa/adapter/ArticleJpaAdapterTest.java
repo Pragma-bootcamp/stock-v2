@@ -63,7 +63,7 @@ class ArticleJpaAdapterTest {
         article.setCreatedAt(LocalDateTime.now());
         article.setUpdatedAt(LocalDateTime.now());
         article.setBrand(mock(Brand.class));
-        article.setCategories(new HashSet<>(List.of(mock(Category.class),mock(Category.class))));
+        article.setCategories(List.of(mock(Category.class),mock(Category.class)));
     }
 
     @Test

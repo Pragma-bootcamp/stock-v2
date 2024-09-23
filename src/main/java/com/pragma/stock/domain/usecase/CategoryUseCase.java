@@ -4,7 +4,7 @@ import com.pragma.stock.domain.api.ICategoryServicePort;
 import com.pragma.stock.domain.constant.BrandConstant;
 import com.pragma.stock.domain.constant.CategoryConstant;
 import com.pragma.stock.domain.constant.ErrorCodeConstant;
-import com.pragma.stock.domain.exception.BrandException;
+import com.pragma.stock.domain.exception.CategoryException;
 import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.spi.ICategoryPersistencePort;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
@@ -18,19 +18,25 @@ public class CategoryUseCase  implements ICategoryServicePort {
     }
     @Override
     public ApiResponseFormat<Category> saveCategory(Category category) {
-        if(category.getName()==null || category.getName().isEmpty()){
-            throw new BrandException(ErrorCodeConstant.BAD_REQUEST, CategoryConstant.CATEGORY_FIELD_NAME_NOT_NULL);
+        if(category.getName()==null){
+            throw new CategoryException(ErrorCodeConstant.BAD_REQUEST, CategoryConstant.CATEGORY_FIELD_NAME_NOT_NULL);
         }
-        if(category.getDescription()==null || category.getDescription().isEmpty()){
-            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,CategoryConstant.CATEGORY_FIELD_DESCRIPTION_NOT_NULL);
+        if(category.getName().isEmpty()){
+            throw new CategoryException(ErrorCodeConstant.BAD_REQUEST, CategoryConstant.CATEGORY_FIELD_NAME_NOT_EMPTY);
+        }
+        if(category.getDescription()==null){
+            throw new CategoryException(ErrorCodeConstant.BAD_REQUEST,CategoryConstant.CATEGORY_FIELD_DESCRIPTION_NOT_NULL);
+        }
+        if(category.getDescription().isEmpty()){
+            throw new CategoryException(ErrorCodeConstant.BAD_REQUEST,CategoryConstant.CATEGORY_FIELD_DESCRIPTION_NOT_EMPTY);
         }
         if(category.getDescription().length() > CategoryConstant.CATEGORY_DESCRIPTION_MAX_LENGTH ||
                 category.getDescription().length() < CategoryConstant.CATEGORY_DESCRIPTION_MIN_LENGTH) {
-            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,CategoryConstant.CATEGORY_DESCRIPTION_LENGTH_MESSAGE);
+            throw new CategoryException(ErrorCodeConstant.BAD_REQUEST,CategoryConstant.CATEGORY_DESCRIPTION_LENGTH_MESSAGE);
         }
         if(category.getName().length() > CategoryConstant.CATEGORY_NAME_MAX_LENGTH ||
                 category.getName().length() < CategoryConstant.CATEGORY_NAME_MIN_LENGTH) {
-            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,CategoryConstant.CATEGORY_NAME_LENGTH_MESSAGE);
+            throw new CategoryException(ErrorCodeConstant.BAD_REQUEST,CategoryConstant.CATEGORY_NAME_LENGTH_MESSAGE);
         }
         return categoryPersistencePort.saveCategory(category);
     }

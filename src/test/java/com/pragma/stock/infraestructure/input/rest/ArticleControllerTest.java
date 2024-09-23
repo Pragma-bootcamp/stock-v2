@@ -80,7 +80,7 @@ class ArticleControllerTest {
         article.setQuantity(Constant.DEFAULT_QUANTITY);
         article.setBrand(mock(Brand.class));
         article.setDescription(Constant.DEFAULT_DESCRIPTION);
-        article.setCategories(new HashSet<>(List.of(mock(Category.class))));
+        article.setCategories(List.of(mock(Category.class)));
         article.setCreatedAt(LocalDateTime.now());
         article.setUpdatedAt(LocalDateTime.now());
         ApiResponseFormat<ArticleResponse> response = new ApiResponseFormat<>(articleResponse, null);

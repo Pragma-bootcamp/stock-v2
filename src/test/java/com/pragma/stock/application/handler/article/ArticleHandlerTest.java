@@ -57,12 +57,6 @@ class ArticleHandlerTest {
         articleResponse = new ArticleResponse();
         categorySimpleResponse = new CategorySimpleResponse();
         simpleBrandResponse = new BrandSimpleResponse();
-        int page = Constant.PAGE_DEFAULT;
-        int size = Constant.PAGE_SIZE;
-        String sortDir = Constant.ORDER_ASC;
-        String sortBy = Constant.SORT_BY;
-        String filterBy = Constant.FILTER_BY;
-        String filterValue = Constant.FILTER_VALUE_STR;
 
     }
     @Test
@@ -76,7 +70,7 @@ class ArticleHandlerTest {
         articleRequest.setDescription(Constant.DEFAULT_DESCRIPTION);
 
         article.setBrand(mock(Brand.class));
-        article.setCategories(new HashSet<>(List.of(mock(Category.class),mock(Category.class))));
+        article.setCategories(List.of(mock(Category.class),mock(Category.class)));
         article.setBrand(mock(Brand.class));
         article.setName(Constant.DEFAULT_NAME);
         article.setPrice(Constant.DEFAULT_PRICE);

@@ -16,14 +16,19 @@ public class BrandUseCase implements IBrandServicePort {
     public BrandUseCase(IBrandPersistencePort iBrandPersistencePort) {
         this.iBrandPersistencePort = iBrandPersistencePort;
     }
-
     @Override
     public ApiResponseFormat<Brand> saveBrand(Brand brand) {
-        if(brand.getName()==null || brand.getName().isEmpty()){
+        if(brand.getName()==null ){
             throw new BrandException(ErrorCodeConstant.BAD_REQUEST,BrandConstant.BRAND_FIELD_NAME_NOT_NULL);
         }
-        if(brand.getDescription()==null || brand.getDescription().isEmpty()){
+        if(brand.getName().isEmpty()){
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,BrandConstant.BRAND_FIELD_NAME_NOT_EMPTY);
+        }
+        if(brand.getDescription()==null ){
             throw new BrandException(ErrorCodeConstant.BAD_REQUEST,BrandConstant.BRAND_FIELD_DESCRIPTION_NOT_NULL);
+        }
+        if(brand.getDescription().isEmpty()){
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,BrandConstant.BRAND_FIELD_DESCRIPTION_NOT_EMPTY);
         }
         if(brand.getDescription().length() > BrandConstant.BRAND_DESCRIPTION_MAX_LENGTH ||
                 brand.getDescription().length() < BrandConstant.BRAND_DESCRIPTION_MIN_LENGTH) {
@@ -35,7 +40,6 @@ public class BrandUseCase implements IBrandServicePort {
         }
         return iBrandPersistencePort.saveBrand(brand);
     }
-
     @Override
     public ApiResponseFormat<List<Brand>> getAllBrands(int page, int size, String sortDir) {
         return iBrandPersistencePort.findAllBrands(page, size, sortDir);
