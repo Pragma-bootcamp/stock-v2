@@ -33,7 +33,6 @@ public class BrandUseCase implements IBrandServicePort {
                 brand.getName().length() < BrandConstant.BRAND_NAME_MIN_LENGTH) {
             throw new BrandException(ErrorCodeConstant.BAD_REQUEST,BrandConstant.BRAND_NAME_LENGTH_MESSAGE);
         }
-        System.out.print(brand.getName());
         return iBrandPersistencePort.saveBrand(brand);
     }
 

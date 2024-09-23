@@ -40,14 +40,6 @@ public class ArticleHandler implements IArticleHandler {
     public ApiResponseFormat<ArticleResponse> saveArticle(ArticleRequest articleRequest) {
         validateRequest(articleRequest);
         Article article = articleRequestMapper.toDomain(articleRequest);
-        Set<Category> categories = articleRequest
-                .getCategories()
-                .stream()
-                .map(iCategoryServicePort::findCategoryById)
-                .collect(Collectors.toSet());
-        Brand brand = iBrandServicePort.getBrandById(articleRequest.getBrand());
-        article.setBrand(brand);
-        article.setCategories(categories);
         article.setCreatedAt(LocalDateTime.now());
         article.setUpdatedAt(LocalDateTime.now());
         ApiResponseFormat<Article> response = iArticleServicePort.saveArticle(article);

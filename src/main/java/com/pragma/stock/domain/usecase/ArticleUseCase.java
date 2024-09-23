@@ -1,27 +1,70 @@
 package com.pragma.stock.domain.usecase;
 
-import com.pragma.stock.domain.constant.ErrorCodeConstant;
-import com.pragma.stock.domain.constant.ErrorMessages;
+import com.pragma.stock.domain.constant.*;
 import com.pragma.stock.domain.exception.ArticleException;
+import com.pragma.stock.domain.exception.BrandException;
 import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.domain.api.IArticleServicePort;
 import com.pragma.stock.domain.model.Article;
+import com.pragma.stock.domain.model.Brand;
+import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.spi.IArticlePersistencePort;
+import com.pragma.stock.domain.spi.IBrandPersistencePort;
+import com.pragma.stock.domain.spi.ICategoryPersistencePort;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
 import com.pragma.stock.domain.utils.Element;
-import org.yaml.snakeyaml.scanner.Constant;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ArticleUseCase implements IArticleServicePort {
     private final IArticlePersistencePort articlePersistencePort;
+    private final ICategoryPersistencePort categoryPersistencePort;
+    private final IBrandPersistencePort brandPersistencePort;
 
-    public ArticleUseCase(IArticlePersistencePort articlePersistencePort) {
+    public ArticleUseCase(IArticlePersistencePort articlePersistencePort,
+                          ICategoryPersistencePort categoryPersistencePort,
+                          IBrandPersistencePort brandPersistencePort) {
         this.articlePersistencePort = articlePersistencePort;
+        this.brandPersistencePort= brandPersistencePort;
+        this.categoryPersistencePort = categoryPersistencePort;
     }
 
     @Override
     public ApiResponseFormat<Article> saveArticle(Article article) {
+        if (article.getBrand().getId() == null ) {
+            throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_BRAND_NOT_NULL);
+        }
+        if (article.getCategories() == null ) {
+            throw  new ArticleException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_CATEGORIES_NOT_NULL);
+        }
+        if(article.getCategories().isEmpty() ||
+                article.getCategories().size() > ArticleConstant.ARTICLE_CATEGORIES_MAX_LENGTH) {
+            throw  new ArticleException(ErrorCodeConstant.BAD_REQUEST,ArticleConstant.ARTICLE_CATEGORIES_LENGTH);
+        }
+        if(article.getName() == null || article.getName().isEmpty()){
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST, ArticleConstant.ARTICLE_FIELD_NAME_NOT_NULL);
+        }
+        if(article.getDescription()==null || article.getDescription().isEmpty()){
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,ArticleConstant.ARTICLE_FIELD_DESCRIPTION_NOT_NULL);
+        }
+        if(article.getDescription().length() > ArticleConstant.ARTICLE_DESCRIPTION_MAX_LENGTH ||
+                article.getDescription().length() < ArticleConstant.ARTICLE_DESCRIPTION_MIN_LENGTH) {
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,ArticleConstant.ARTICLE_DESCRIPTION_LENGTH_MESSAGE);
+        }
+        if(article.getName().length() > ArticleConstant.ARTICLE_NAME_MAX_LENGTH ||
+                article.getName().length() < ArticleConstant.ARTICLE_NAME_MIN_LENGTH) {
+            throw new BrandException(ErrorCodeConstant.BAD_REQUEST,ArticleConstant.ARTICLE_NAME_LENGTH_MESSAGE);
+        }
+        if(article.getCategories().size() != article.getCategories().stream().map(Category::getId).distinct().count()){
+            throw  new ArticleException(ErrorCodeConstant.BAD_REQUEST, CategoryConstant.CATEGORY_NOT_FOUND);
+        }
+        List<Category> categories = article.getCategories().stream()
+                .map((category -> categoryPersistencePort.findCategoryById(category.getId()))).toList();
+        Brand brand = brandPersistencePort.findBrandById(article.getBrand().getId());
+        article.setBrand(brand);
+        article.setCategories(categories);
         return articlePersistencePort.saveArticle(article);
     }
 

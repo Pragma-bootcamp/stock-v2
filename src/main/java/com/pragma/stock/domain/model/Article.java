@@ -8,14 +8,14 @@ public class Article {
     private Long id;
     private String name;
     private String description;
-    private Set<Category> categories;
+    private List<Category> categories;
     private Brand brand;
     private double price;
     private int quantity;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public Article(Long id, String name, String description, double price, int quantity, Set<Category> categories, Brand brand) {
+    public Article(Long id, String name, String description, double price, int quantity, List<Category> categories, Brand brand) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -44,10 +44,10 @@ public class Article {
     public void setDescription(String description) {
         this.description = description;
     }
-    public Set<Category> getCategories() {
+    public List<Category> getCategories() {
         return categories;
     }
-    public void setCategories(Set<Category> categories) {
+    public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
     public Brand getBrand() {
