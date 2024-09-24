@@ -65,8 +65,9 @@ public class BrandController {
     public ApiResponseFormat<List<BrandResponse>> listBrands (
             @RequestParam(value = "page") int page,
             @RequestParam(value = "size") int size,
-            @RequestParam(value = "sortDir", defaultValue = "ASC",required = false) String sortDir
+            @RequestParam(value = "sortDir", defaultValue = "ASC",required = false) String sortDir,
+            @RequestParam(value ="sortBy", required = false) String sortBy
     ){
-        return iBrandHandler.getAllBrands(page, size, sortDir);
+        return iBrandHandler.getAllBrands(page, size, sortDir,sortBy);
     }
 }

@@ -36,9 +36,10 @@ public class BrandJpaAdapter implements IBrandPersistencePort {
     }
 
     @Override
-    public ApiResponseFormat<List<Brand>> findAllBrands(int page, int size, String sortDir) {
+    public ApiResponseFormat<List<Brand>> findAllBrands(int page, int size, String sortDir,String sortBy) {
         Pageable pageable = PageRequest.of(page,size,
-                Sort.by(Sort.Direction.fromString(sortDir), Element.NAME.name().toLowerCase()));
+                Sort.by(Sort.Direction.fromString(sortDir),
+                        sortBy!=null && !sortBy.isEmpty()? sortBy:Element.ID.name().toLowerCase()));
         Page<BrandEntity> brandPage = brandRepository.findAll(pageable);
         List<Brand> brands = brandPage.getContent().stream().map(brandDboMapper::toDomain).toList();
         MetadataResponse metadata = new MetadataResponse(page, brandPage.getTotalElements(),

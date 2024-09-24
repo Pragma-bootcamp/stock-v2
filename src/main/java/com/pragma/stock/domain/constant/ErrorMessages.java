@@ -30,6 +30,7 @@ public class ErrorMessages {
     public static final String ARTICLE_CATEGORIES_DUPLICATED = "The categories ids can't be duplicated";
     public static final String ARTICLE_NOT_FOUND = "The article with the id '%d' not found";
 
+
     public static final String BRAND_NAME_LENGTH_MESSAGE = "The length of field 'name' must be between 3 and 50";
     public static final String BRAND_DESCRIPTION_LENGTH_MESSAGE = "The field 'description' must be between 3 and 90";
     public static final String BRAND_ALREADY_EXIST = "The brand '%s' already exist";
@@ -38,6 +39,7 @@ public class ErrorMessages {
     public static final String BRAND_FIELD_DESCRIPTION_NOT_NULL = "The field 'description' must not be null";
     public static final String BRAND_FIELD_DESCRIPTION_NOT_EMPTY = "The field 'description' must not be empty";
     public static final String BRAND_FIELD_NAME_NOT_EMPTY = "The field 'name' must not be empty";
+    public static final String BRAND_SORT_BY_NOT_ALLOW = "The brand can be sorted by 'name' only";
 
     public static final String CATEGORY_NAME_LENGTH_MESSAGE = "The length of field 'name' must be between 3 and 50";
     public static final String CATEGORY_DESCRIPTION_LENGTH_MESSAGE = "The field 'description' must be between 3 and 90";
@@ -47,5 +49,5 @@ public class ErrorMessages {
     public static final String CATEGORY_FIELD_DESCRIPTION_NOT_NULL = "The field 'description' must not be null";
     public static final String CATEGORY_FIELD_DESCRIPTION_NOT_EMPTY = "The field 'description' must not be empty";
     public static final String CATEGORY_FIELD_NAME_NOT_EMPTY = "The field 'name' must not be empty";
-
+    public static final String CATEGORY_SORT_BY_NOT_ALLOW = "The category can be sorted by 'name' only";
 }

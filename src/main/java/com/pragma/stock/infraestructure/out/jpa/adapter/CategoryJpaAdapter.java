@@ -24,33 +24,35 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
 
     private final CategoryRepository categoryRepository;
     private final CategoryDboMapper mapper;
+
     @Override
     public ApiResponseFormat<Category> saveCategory(Category category) {
         List<CategoryEntity> existCategory = categoryRepository.findByName(category.getName());
-        if(!existCategory.isEmpty()) throw new CategoryException(HttpStatus.CONFLICT.value(),
-                String.format(ErrorMessages.CATEGORY_ALREADY_EXIST,category.getName()));
+        if (!existCategory.isEmpty()) throw new CategoryException(HttpStatus.CONFLICT.value(),
+                String.format(ErrorMessages.CATEGORY_ALREADY_EXIST, category.getName()));
         CategoryEntity toCreate = mapper.toDbo(category);
         CategoryEntity created = categoryRepository.save(toCreate);
-        return new ApiResponseFormat<>(mapper.toDomain(created),null);
+        return new ApiResponseFormat<>(mapper.toDomain(created), null);
     }
 
     @Override
-    public ApiResponseFormat<List<Category>> findAllCategories(int page, int size, String sortDir) {
+    public ApiResponseFormat<List<Category>> findAllCategories(int page, int size, String sortDir, String sortBy) {
         Pageable pageable = PageRequest.of(page,
                 size,
-                Sort.by(Sort.Direction.fromString(sortDir), Element.NAME.name().toLowerCase()));
+                Sort.by(Sort.Direction.fromString(sortDir),
+                        sortBy != null && !sortBy.isEmpty() ? sortBy : Element.ID.name().toLowerCase()));
         Page<CategoryEntity> categoryPage = categoryRepository.findAll(pageable);
         List<Category> categories = categoryPage.getContent().stream().map(mapper::toDomain).toList();
         MetadataResponse metadata = new MetadataResponse(page,
-                categoryPage.getTotalElements(),categoryPage.getTotalPages(),size);
-        return new ApiResponseFormat<>(categories,metadata);
+                categoryPage.getTotalElements(), categoryPage.getTotalPages(), size);
+        return new ApiResponseFormat<>(categories, metadata);
     }
 
     @Override
     public Category findCategoryById(Long id) {
         CategoryEntity categoryEntity = categoryRepository.findById(id).orElse(null);
-        if(categoryEntity == null) throw  new CategoryException(HttpStatus.NOT_FOUND.value(),
-                String.format(ErrorMessages.CATEGORY_NOT_FOUND,id));
+        if (categoryEntity == null) throw new CategoryException(HttpStatus.NOT_FOUND.value(),
+                String.format(ErrorMessages.CATEGORY_NOT_FOUND, id));
         return mapper.toDomain(categoryEntity);
     }
 

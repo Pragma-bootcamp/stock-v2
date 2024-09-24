@@ -4,9 +4,13 @@ import com.pragma.stock.domain.constant.CategoryConstant;
 import com.pragma.stock.domain.constant.ErrorCodeConstant;
 import com.pragma.stock.domain.constant.ErrorMessages;
 import com.pragma.stock.domain.exception.CategoryException;
+import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.domain.model.Category;
 import com.pragma.stock.domain.spi.ICategoryPersistencePort;
 import com.pragma.stock.domain.utils.ApiResponseFormat;
+import com.pragma.stock.domain.utils.Element;
+import org.springframework.http.HttpStatus;
+
 import java.util.List;
 
 public class CategoryUseCase  implements ICategoryServicePort {
@@ -16,6 +20,24 @@ public class CategoryUseCase  implements ICategoryServicePort {
     }
     @Override
     public ApiResponseFormat<Category> saveCategory(Category category) {
+        validateCategory(category);
+        return categoryPersistencePort.saveCategory(category);
+    }
+
+    @Override
+    public ApiResponseFormat<List<Category>> findAllCategories(int page,int size, String sortDir, String sortBy) {
+        if (sortBy != null && !sortBy.isEmpty() && !sortBy.equals(Element.NAME.name().toLowerCase())) {
+            throw new PaginationException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.CATEGORY_SORT_BY_NOT_ALLOW);
+        }
+        return categoryPersistencePort.findAllCategories(page, size, sortDir,sortBy);
+    }
+
+    @Override
+    public Category findCategoryById(Long id) {
+        return categoryPersistencePort.findCategoryById(id);
+    }
+
+    public void validateCategory(Category category){
         if(category.getName()==null){
             throw new CategoryException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.CATEGORY_FIELD_NAME_NOT_NULL);
         }
@@ -36,17 +58,5 @@ public class CategoryUseCase  implements ICategoryServicePort {
                 category.getName().length() < CategoryConstant.CATEGORY_NAME_MIN_LENGTH) {
             throw new CategoryException(ErrorCodeConstant.BAD_REQUEST,ErrorMessages.CATEGORY_NAME_LENGTH_MESSAGE);
         }
-        return categoryPersistencePort.saveCategory(category);
     }
-
-    @Override
-    public ApiResponseFormat<List<Category>> findAllCategories(int page,int size, String sortDir) {
-        return categoryPersistencePort.findAllCategories(page, size, sortDir);
-    }
-
-    @Override
-    public Category findCategoryById(Long id) {
-        return categoryPersistencePort.findCategoryById(id);
-    }
-
 }

@@ -60,8 +60,9 @@ public class CategoryController {
     public ApiResponseFormat<List<CategoryResponse>> listAllCategories(
             @RequestParam(value = "page") int page,
             @RequestParam(value = "size") int size,
-            @RequestParam(value = "sortDir", defaultValue = "ASC",required = false) String sortDir
+            @RequestParam(value = "sortDir", defaultValue = "ASC",required = false) String sortDir,
+            @RequestParam(value ="sortBy",required = false) String sortBy
     ) {
-        return categoryHandler.findAllCategories(page,size,sortDir);
+        return categoryHandler.findAllCategories(page,size,sortDir,sortBy);
     }
 }

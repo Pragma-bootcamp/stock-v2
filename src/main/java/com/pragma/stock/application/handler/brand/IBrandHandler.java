@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface IBrandHandler {
     ApiResponseFormat<BrandResponse> saveBrand(BrandRequest brandRequest);
-    ApiResponseFormat<List<BrandResponse>> getAllBrands(int page,int size,String sortDir);
+    ApiResponseFormat<List<BrandResponse>> getAllBrands(int page,int size,String sortDir,String sortBy);
 }

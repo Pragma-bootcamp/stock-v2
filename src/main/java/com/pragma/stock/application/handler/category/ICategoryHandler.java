@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ICategoryHandler {
     ApiResponseFormat<CategoryResponse> saveCategory(CategoryRequest categoryRequest);
-    ApiResponseFormat<List<CategoryResponse>> findAllCategories(int page,int size,String sortDir);
+
+    ApiResponseFormat<List<CategoryResponse>> findAllCategories(int page, int size, String sortDir, String sortBy);
 }

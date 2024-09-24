@@ -30,6 +30,22 @@ public class ArticleUseCase implements IArticleServicePort {
 
     @Override
     public ApiResponseFormat<Article> saveArticle(Article article) {
+        validateArticle(article);
+        List<Category> categories = article.getCategories().stream()
+                .map((category -> categoryPersistencePort.findCategoryById(category.getId()))).toList();
+        Brand brand = brandPersistencePort.findBrandById(article.getBrand().getId());
+        article.setBrand(brand);
+        article.setCategories(categories);
+        return articlePersistencePort.saveArticle(article);
+    }
+
+    @Override
+    public ApiResponseFormat<List<Article>> getArticles(int page, int size, String sortDir,
+                                                        String sortBy, String filterBy, String filterValue) {
+        validateGetArticlesParams(sortDir, sortBy, filterBy, filterValue);
+        return articlePersistencePort.getArticles(page, size, sortDir, sortBy, filterBy, filterValue);
+    }
+    public void validateArticle (Article article){
         if (article.getBrand() == null) {
             throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_BRAND_NOT_NULL);
         }
@@ -63,21 +79,7 @@ public class ArticleUseCase implements IArticleServicePort {
         if (article.getCategories().size() != article.getCategories().stream().map(Category::getId).distinct().count()) {
             throw new ArticleException(ErrorCodeConstant.BAD_REQUEST, ErrorMessages.ARTICLE_CATEGORIES_DUPLICATED);
         }
-        List<Category> categories = article.getCategories().stream()
-                .map((category -> categoryPersistencePort.findCategoryById(category.getId()))).toList();
-        Brand brand = brandPersistencePort.findBrandById(article.getBrand().getId());
-        article.setBrand(brand);
-        article.setCategories(categories);
-        return articlePersistencePort.saveArticle(article);
     }
-
-    @Override
-    public ApiResponseFormat<List<Article>> getArticles(int page, int size, String sortDir,
-                                                        String sortBy, String filterBy, String filterValue) {
-        validateGetArticlesParams(sortDir, sortBy, filterBy, filterValue);
-        return articlePersistencePort.getArticles(page, size, sortDir, sortBy, filterBy, filterValue);
-    }
-
     public void validateGetArticlesParams(String sortDir, String sortBy, String filterBy, String filterValue) {
         if (!(sortDir.equalsIgnoreCase(Element.ASC.name().toLowerCase()) ||
                 sortDir.equalsIgnoreCase(Element.DESC.name().toLowerCase())))

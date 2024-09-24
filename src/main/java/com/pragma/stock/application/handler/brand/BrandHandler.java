@@ -37,9 +37,9 @@ public class BrandHandler implements IBrandHandler{
     }
 
     @Override
-    public ApiResponseFormat<List<BrandResponse>> getAllBrands(int page, int size, String sortDir) {
+    public ApiResponseFormat<List<BrandResponse>> getAllBrands(int page, int size, String sortDir,String sortBy) {
         this.validatePagination(page, size, sortDir);
-        ApiResponseFormat<List<Brand>> brands = brandServicePort.getAllBrands(page,size,sortDir);
+        ApiResponseFormat<List<Brand>> brands = brandServicePort.getAllBrands(page,size,sortDir,sortBy);
         List<BrandResponse> brandResponseList = brands.getData().stream().map(brandResponseMapper::toDto).toList();
         return new ApiResponseFormat<>(brandResponseList,brands.getMetadata());
     }

@@ -2,6 +2,7 @@ package com.pragma.stock.application.handler.category;
 
 import com.pragma.stock.application.dto.category.CategoryRequest;
 import com.pragma.stock.application.dto.category.CategoryResponse;
+import com.pragma.stock.domain.constant.ErrorMessages;
 import com.pragma.stock.domain.exception.PaginationException;
 import com.pragma.stock.application.mapper.category.CategoryRequestMapper;
 import com.pragma.stock.application.mapper.category.CategoryResponseMapper;
@@ -33,21 +34,22 @@ public class CategoryHandler implements ICategoryHandler {
         category.setUpdatedAt(LocalDateTime.now());
         ApiResponseFormat<Category> categoryCreated = categoryServicePort.saveCategory(category);
         CategoryResponse categoryResponse = categoryResponseMapper.toDto(categoryCreated.getData());
-        return new ApiResponseFormat<>(categoryResponse,null);
+        return new ApiResponseFormat<>(categoryResponse, null);
     }
 
     @Override
-    public ApiResponseFormat<List<CategoryResponse>> findAllCategories(int page,int size,String sortDir) {
-        this.validatePagination(page,size,sortDir);
-        ApiResponseFormat<List<Category>> categories = categoryServicePort.findAllCategories(page,size,sortDir);
+    public ApiResponseFormat<List<CategoryResponse>> findAllCategories(int page, int size, String sortDir, String sortBy) {
+        this.validatePagination(page, size, sortDir, sortBy);
+        ApiResponseFormat<List<Category>> categories = categoryServicePort.findAllCategories(page, size, sortDir, sortBy);
         List<CategoryResponse> response = categories.getData().stream().map(categoryResponseMapper::toDto).toList();
-        return new ApiResponseFormat<>(response,categories.getMetadata());
+        return new ApiResponseFormat<>(response, categories.getMetadata());
     }
-    public void validatePagination(int page,int size, String sortDir) {
+
+    public void validatePagination(int page, int size, String sortDir, String sortBy) {
         if (page < UtilConstant.MIN_VALUE_PAGE_SIZE || size < UtilConstant.MIN_VALUE_PAGE_SIZE) {
             throw new PaginationException(HttpStatus.BAD_REQUEST.value(), UtilConstant.PAGINATION_NEGATIVE);
         }
-        if(!(sortDir.equalsIgnoreCase(Element.ASC.name()) || sortDir.equalsIgnoreCase(Element.DESC.name()))) {
+        if (!(sortDir.equalsIgnoreCase(Element.ASC.name()) || sortDir.equalsIgnoreCase(Element.DESC.name()))) {
             throw new PaginationException(HttpStatus.BAD_REQUEST.value(), UtilConstant.ORDER_DIR_VALID_OPTIONS);
         }
     }
