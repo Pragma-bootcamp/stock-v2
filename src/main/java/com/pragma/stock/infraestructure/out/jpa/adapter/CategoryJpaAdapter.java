@@ -1,6 +1,5 @@
 package com.pragma.stock.infraestructure.out.jpa.adapter;
 
-import com.pragma.stock.domain.constant.CategoryConstant;
 import com.pragma.stock.domain.constant.ErrorMessages;
 import com.pragma.stock.domain.exception.CategoryException;
 import com.pragma.stock.domain.model.Category;

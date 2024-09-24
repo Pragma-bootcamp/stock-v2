@@ -54,7 +54,7 @@ class ArticleJpaAdapterTest {
         articleEntity.setCreatedAt(LocalDateTime.now());
         articleEntity.setUpdatedAt(LocalDateTime.now());
         articleEntity.setBrand(mock(BrandEntity.class));
-        articleEntity.setCategories(new HashSet<>(List.of(mock(CategoryEntity.class),mock(CategoryEntity.class))));
+        articleEntity.setCategories(List.of(mock(CategoryEntity.class),mock(CategoryEntity.class)));
 
         article.setId(Constant.DEFAULT_ID);
         article.setName(Constant.DEFAULT_NAME);
